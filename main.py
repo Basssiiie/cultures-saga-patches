@@ -5,7 +5,7 @@ from patches.animalLimits import AnimalLimits
 from patches.assistantCtrlClick import AssistantCtrlClick
 from patches.assistantLimits import AssistantLimits
 from patches.fixMarkerOnBorderCrash import FixMarkerOnBorderCrash
-from patches.fixVehicleConstructionCrash import FixVehicleConstructionCrash
+from patches.fixVehicleConstructionFreeze import FixVehicleConstructionFreeze
 from patches.houseLimits import HouseLimits
 from patches.humanLimits import HumanLimits
 from patches.mapMoveableLimits import MapMoveableLimits
@@ -17,7 +17,7 @@ from utils.patch import Patch
 patches: list[Patch] = [
 	# Bug fixes
 	FixMarkerOnBorderCrash(),
-	FixVehicleConstructionCrash(),
+	FixVehicleConstructionFreeze(),
 	# Map limits
 	AnimalLimits(),
 	HouseLimits(),

@@ -2,7 +2,7 @@ from utils.executable import Executable
 from utils.patch import Patch
 
 
-class FixVehicleConstructionCrash(Patch):
+class FixVehicleConstructionFreeze(Patch):
 	def apply(self, exe: Executable) -> None:
 		# In: Human::ExecuteJob_VehicleBuilder()
 		# Bug:
