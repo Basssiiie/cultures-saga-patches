@@ -4,6 +4,7 @@ import datetime
 from patches.animalLimits import AnimalLimits
 from patches.assistantCtrlClick import AssistantCtrlClick
 from patches.assistantLimits import AssistantLimits
+from patches.fixAttackRadiusFreeze import FixAttackRadiusFreeze
 from patches.fixMarkerOnBorderCrash import FixMarkerOnBorderCrash
 from patches.fixVehicleConstructionFreeze import FixVehicleConstructionFreeze
 from patches.houseLimits import HouseLimits
@@ -16,6 +17,7 @@ from utils.patch import Patch
 
 patches: list[Patch] = [
 	# Bug fixes
+	FixAttackRadiusFreeze(),
 	FixMarkerOnBorderCrash(),
 	FixVehicleConstructionFreeze(),
 	# Map limits
