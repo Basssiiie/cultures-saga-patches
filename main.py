@@ -1,6 +1,5 @@
 import argparse
 import datetime
-import sys
 
 from patches.animalLimits import AnimalLimits
 from patches.assistantCtrlClick import AssistantCtrlClick
