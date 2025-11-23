@@ -1,4 +1,3 @@
-
 from utils.executable import Executable
 from utils.patch import Patch
 
@@ -24,10 +23,10 @@ class AssistantLimits(Patch):
 			# Remove cap of 20 requested swordmen
 			(0x178ed, [0x83, 0xf8, 0x14, 0x89, 0x46, 0x34, 0x7c, 0x03, 0x6a, 0x14, 0x58], "NOP\n" * 11),
 
-			# Request more males if needed for soldiers every 3 minutes -> 5 seconds
-			(0x177ab, [0xb9, 0xb4, 0x00, 0x00, 0x00], "MOV ECX, 0x5"),
-			# Execute request baby every 15 -> 5 seconds (~3 times as fast)
-			(0x178fe, [0x6a, 0x0f], "PUSH 0x5"),
+			# Request more males if needed for soldiers every 3 minutes -> 2 seconds
+			(0x177ab, [0xb9, 0xb4, 0x00, 0x00, 0x00], "MOV ECX, 0x1"),
+			# Execute request baby every 15 -> 2 seconds (~7.5 times as fast)
+			(0x178fe, [0x6a, 0x0f], "PUSH 0x1"),
 		]
 
 		for limit in limits:
