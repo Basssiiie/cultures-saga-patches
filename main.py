@@ -31,7 +31,7 @@ patches: list[Patch] = [
 ]
 
 parser = argparse.ArgumentParser("Cultures Saga patcher", "Patcher to increase various limits and fix bugs in Cultures Saga.")
-parser.add_argument("path", help="Path to the executable to patch")
+parser.add_argument("path", nargs="?", help="Path to the executable to patch")
 parser.add_argument("-o", "--output", help="Path including filename of where to save the result (by default in same folder as input)")
 parser.add_argument("-f", "--force", action="store_true", help="Patch segments regardless of whether they fail verification")
 parser.add_argument("-v", "--verbose", action="store_true", help="Print additional logging during patching")
