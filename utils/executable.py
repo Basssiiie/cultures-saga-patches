@@ -5,12 +5,13 @@ from utils.pretty_print import colors, pretty_print
 
 
 class Executable:
-	_compiler = Compiler()
 	_buffer = bytearray()
 	_cave_search_address = 0x1000
 
-	def __init__(self, path: str, verbose: bool) -> None:
+	def __init__(self, path: str, force: bool, verbose: bool) -> None:
+		self.force = force
 		self.verbose = verbose
+		self.compiler = Compiler(verbose)
 
 		with open(path, "rb") as file:
 			self._buffer = bytearray(file.read())
@@ -23,7 +24,7 @@ class Executable:
 		patch_length = len(patch)
 
 		if isinstance(patch, str):
-			patch = self._compiler.compile(address, patch)
+			patch = self.compiler.compile(address, patch)
 			patch_length = len(patch)
 		elif isinstance(patch, list):
 			patch = bytes(patch)
@@ -33,8 +34,8 @@ class Executable:
 
 		end = address + patch_length
 		self._buffer[address:end] = patch
+		print(f"{colors.GREEN}Patched code at 0x{address:X} - 0x{end:X} with {patch_length} bytes{colors.RESET}")
 		if self.verbose:
-			print(f"Patched code at 0x{address:X} - 0x{end:X} with {patch_length} bytes")
 			pretty_print(patch, address)
 
 		if verify is not None and patch_length > len(verify):
@@ -56,7 +57,11 @@ class Executable:
 		if actual == patch:
 			print(f"{colors.GREEN}Already patched at 0x{address:X}: [{actual.hex(' ')}]{colors.RESET}")
 		else:
-			print(f"{colors.YELLOW}Patch failed at 0x{address:X}\nverify:  [{verify.hex(' ')}]\npatch:   [{patch.hex(' ')}]\nactual:  [{actual.hex(' ')}]{colors.RESET}")
+			print(f"{colors.YELLOW}Patch failed at 0x{address:X}\n verify:  [{verify.hex(' ')}]\n patch:   [{patch.hex(' ')}]\n actual:  [{actual.hex(' ')}]{colors.RESET}")
+
+			if self.force:
+				print(f"{colors.RED}Forcing patch despite verification failure{colors.RESET}")
+				return True
 
 		return False
 
