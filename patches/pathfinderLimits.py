@@ -14,7 +14,7 @@ class PathfinderLimits(Patch):
 			(0x1ce09, [0x68, 0xd0, 0x07, 0x00, 0x00], f"PUSH 0x{pathfinder_limit:X}"),
 
 			# GameControl::System_PathfinderLimit_IsSearchAllowed()
-			(0x9d89, [0x83, 0xf9, 0x02], "CMP EAX, 0x16"), # allow 11 times as many searches (2 -> 22)
+			(0x9d89, [0x83, 0xf9, 0x02], "CMP ECX, 0x16"), # allow 11 times as many searches (2 -> 22)
 		]
 
 		for limit in limits:
