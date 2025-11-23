@@ -2,12 +2,31 @@ import argparse
 import datetime
 import sys
 
+from patches.animalLimits import AnimalLimits
 from patches.assistantCtrlClick import AssistantCtrlClick
 from patches.assistantLimits import AssistantLimits
+from patches.fixMarkerOnBorderCrash import FixMarkerOnBorderCrash
+from patches.fixVehicleConstructionCrash import FixVehicleConstructionCrash
+from patches.houseLimits import HouseLimits
+from patches.humanLimits import HumanLimits
+from patches.mapMoveableLimits import MapMoveableLimits
+from patches.missionLimits import MissionLimits
+from patches.pathfinderLimits import PathfinderLimits
 from utils.executable import Executable
 from utils.patch import Patch
 
 patches: list[Patch] = [
+	# Bug fixes
+	FixMarkerOnBorderCrash(),
+	FixVehicleConstructionCrash(),
+	# Map limits
+	AnimalLimits(),
+	HouseLimits(),
+	HumanLimits(),
+	MapMoveableLimits(),
+	MissionLimits(),
+	PathfinderLimits(),
+	# Assistant limits
 	AssistantLimits(),
 	AssistantCtrlClick(),
 ]
