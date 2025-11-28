@@ -4,8 +4,8 @@ from utils.patch import Patch
 
 class MissionLimits(Patch):
 	def apply(self, exe: Executable) -> None:
-		missions_limit = 900 # original: 150
-		mission_manager_size = 0x1c + (missions_limit * 0xdd8)
+		# original: 150, current: 900.1~ due to error in cnmod
+		mission_manager_size = 0x30ac08 # 0x1c + (missions_limit * 0xdd8)
 
 		limits = [
 			# Game::Game_StartUp():
