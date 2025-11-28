@@ -1,7 +1,7 @@
 
 
 from utils.compiler import Compiler
-from utils.pretty_print import colors, pretty_print
+from utils.pretty_print import Color, error, log, pretty_print, warning
 
 
 class Executable:
@@ -34,12 +34,12 @@ class Executable:
 
 		end = address + patch_length
 		self._buffer[address:end] = patch
-		print(f"{colors.GREEN}Patched code at 0x{address:X} - 0x{end:X} with {patch_length} bytes{colors.RESET}")
+		log(f"Patched code at 0x{address:X} - 0x{end:X} with {patch_length} bytes", Color.GREEN)
 		if self.verbose:
 			pretty_print(patch, address)
 
 		if verify is not None and patch_length > len(verify):
-			print(f"{colors.YELLOW}WARNING: replaced code is larger than original ({patch_length} vs. {len(verify)}){colors.RESET}")
+			warning(f"Replaced code is larger than original ({patch_length} vs. {len(verify)})")
 
 	def _check(self, address: int, verify: bytes | list[int], patch: bytes | list[int]) -> bool:
 		if not isinstance(verify, bytes):
@@ -48,19 +48,19 @@ class Executable:
 		actual = self._buffer[address:address + len(verify)]
 		if actual == verify:
 			if self.verbose:
-				print(f"Check passed at 0x{address:X}: [{actual.hex(' ')}]")
+				log(f"Check passed at 0x{address:X}: [{actual.hex(' ')}]")
 			return True
 
 		if not isinstance(patch, bytes):
 			patch = bytes(patch)
 
 		if actual == patch:
-			print(f"{colors.GREEN}Already patched at 0x{address:X}: [{actual.hex(' ')}]{colors.RESET}")
+			log(f"Already patched at 0x{address:X}: [{actual.hex(' ')}]", Color.GREEN)
 		else:
-			print(f"{colors.YELLOW}Patch failed at 0x{address:X}\n verify:  [{verify.hex(' ')}]\n patch:   [{patch.hex(' ')}]\n actual:  [{actual.hex(' ')}]{colors.RESET}")
+			warning(f"Patch failed at 0x{address:X}\n verify:  [{verify.hex(' ')}]\n patch:   [{patch.hex(' ')}]\n actual:  [{actual.hex(' ')}]")
 
 			if self.force:
-				print(f"{colors.RED}Forcing patch despite verification failure{colors.RESET}")
+				error("Forcing patch despite verification failure")
 				return True
 
 		return False

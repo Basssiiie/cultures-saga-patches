@@ -14,6 +14,7 @@ from patches.missionLimits import MissionLimits
 from patches.pathfinderLimits import PathfinderLimits
 from utils.executable import Executable
 from utils.patch import Patch
+from utils.pretty_print import log
 
 patches: list[Patch] = [
 	# Bug fixes
@@ -41,14 +42,14 @@ args = parser.parse_args()
 
 path = args.path
 if path:
-	print("Input:", path)
+	log(f"Input: {path}")
 else:
 	path = input("Please enter the path to an executable to patch:")
 
 exe = Executable(path, args.force, args.verbose)
 
 for patch in patches:
-	print(f"Applying patch: {patch.__class__.__name__}")
+	log(f"Applying patch: {patch.__class__.__name__}")
 	patch.apply(exe)
 
 output = args.output
@@ -56,5 +57,5 @@ if not output:
 	now = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 	output = path.replace(".exe", f".patch_{now}.exe")
 
-print("Output:", output)
+log(f"Output: {output}")
 exe.save(output)

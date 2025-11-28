@@ -2,7 +2,7 @@ import re
 
 import keystone as ks
 
-from utils.pretty_print import colors
+from utils.pretty_print import error, log
 
 
 class Compiler:
@@ -28,7 +28,7 @@ class Compiler:
 			value[0] = address
 
 			if self.verbose:
-				print(f"Resolved absolute jump to 0x{address:X}")
+				log(f"Resolved absolute jump to 0x{address:X}")
 			return True
 
 		cmp = ks.Ks(ks.KS_ARCH_X86, ks.KS_MODE_32)
@@ -38,5 +38,5 @@ class Compiler:
 			encoding, _ = cmp.asm(code, address)
 			return bytearray(encoding) # type: ignore
 		except ks.KsError as e:
-			print(f"{colors.RED}ERROR: {e}{colors.RESET}")
+			error(str(e))
 			raise e

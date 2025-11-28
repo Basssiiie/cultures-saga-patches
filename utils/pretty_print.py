@@ -1,7 +1,9 @@
+from enum import StrEnum
+
 import capstone as cs
 
 
-class colors:
+class Color(StrEnum):
 	RESET = "\033[m"
 	BLACK = "\033[0;30m"
 	RED = "\033[0;31m"
@@ -20,7 +22,16 @@ class colors:
 	LIGHT_CYAN = "\033[1;36m"
 	LIGHT_WHITE = "\033[1;37m"
 
+def log(message: str, color: Color | None = None) -> None:
+	print(message if color is None else f"{color}{message}{Color.RESET}")
+
+def warning(message: str) -> None:
+	log(f"WARNING: {message}", Color.YELLOW)
+
+def error(message: str) -> None:
+	log(f"ERROR: {message}", Color.RED)
+
 def pretty_print(bytes: bytes, address: int = 0) -> None:
 	cmp = cs.Cs(cs.CS_ARCH_X86, cs.CS_MODE_32)
 	for line in cmp.disasm(bytes, address):
-		print(f"{colors.LIGHT_GREEN}{line.address:0>4x}:\t{line.bytes.hex(' '):<24}{line.mnemonic:<8}{line.op_str}{colors.RESET}")
+		log(f"{line.address:0>4x}:\t{line.bytes.hex(' '):<24}{line.mnemonic:<8}{line.op_str}", Color.LIGHT_GREEN)
