@@ -46,7 +46,7 @@ if path:
 else:
 	path = input("Please enter the path to an executable to patch:")
 
-exe = Executable(path, args.force, args.verbose)
+exe = Executable(path, args.force, args.verbose, 0xf21cb)
 
 for patch in patches:
 	log(f"Applying patch: {patch.__class__.__name__}")

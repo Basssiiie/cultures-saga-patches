@@ -8,26 +8,26 @@ class Executable:
 	_buffer = bytearray()
 	_cave_search_address = 0x1000
 
-	def __init__(self, path: str, force: bool, verbose: bool) -> None:
+	def __init__(self, path: str, force: bool, verbose: bool, code_cave: int) -> None:
 		self.force = force
 		self.verbose = verbose
 		self.compiler = Compiler(verbose)
+		self.code_cave = code_cave
 
 		with open(path, "rb") as file:
 			self._buffer = bytearray(file.read())
+
+		verify = self._get(code_cave, 20)
+		if any(b != 0 for b in verify):
+			warning("Specified code cave address not empty!")
 
 	def save(self, path: str) -> None:
 		with open(path, "wb") as file:
 			file.write(self._buffer)
 
 	def verify_and_replace(self, address: int, verify: bytes | list[int], patch: str | bytes | list[int]) -> None:
+		patch = self._ensure_bytes(address, patch)
 		patch_length = len(patch)
-
-		if isinstance(patch, str):
-			patch = self.compiler.compile(address, patch)
-			patch_length = len(patch)
-		elif isinstance(patch, list):
-			patch = bytes(patch)
 
 		if not self._check(address, verify, patch):
 			return
@@ -41,11 +41,32 @@ class Executable:
 		if verify is not None and patch_length > len(verify):
 			warning(f"Replaced code is larger than original ({patch_length} vs. {len(verify)})")
 
+	def add_code_cave(self, code: str) -> int:
+		start = self.code_cave
+
+		asm = self.compiler.compile(start, code)
+		length = len(asm)
+		self.code_cave += length
+
+		if not self._check(start, [0] * length, asm):
+			return start
+
+		end = start + length
+		self._buffer[start:end] = asm
+		if self.verbose:
+			log(f"Added code cave at 0x{start:X} - 0x{end:X} with {length} bytes")
+			pretty_print(asm, start)
+
+		return start
+
+	def _get(self, address:int, length:int) -> bytes:
+		return self._buffer[address:address + length]
+
 	def _check(self, address: int, verify: bytes | list[int], patch: bytes | list[int]) -> bool:
 		if not isinstance(verify, bytes):
 			verify = bytes(verify)
 
-		actual = self._buffer[address:address + len(verify)]
+		actual = self._get(address, len(verify))
 		if actual == verify:
 			if self.verbose:
 				log(f"Check passed at 0x{address:X}: [{actual.hex(' ')}]")
@@ -65,38 +86,9 @@ class Executable:
 
 		return False
 
-#	def add_code_cave(self, code: str) -> int:
-#		start, total = self._find_cave(20)
-#		asm = self._compiler.compile(start, code)
-#		length = len(asm)
-#		end = start + length
-#
-#		self._buffer[start:end] = asm
-#		if self.verbose:
-#			print(f"Added code cave at 0x{start:X} - 0x{end:X} with {length} bytes ({total - length} bytes left)")
-#			pretty_print(asm, start)
-#
-#		return start
-#
-#	def _find_cave(self, size: int) -> tuple[int, int]:
-#		length = len(self._buffer)
-#		idx = self._cave_search_address
-#
-#		while idx < length:
-#			if self._buffer[idx] != 0:
-#				idx += 1
-#				continue
-#
-#			cave_start = idx
-#			while self._buffer[idx] == 0 and idx < length:
-#				idx += 1
-#
-#			cave_length = idx - cave_start
-#			if cave_length >= size:
-#				if self.verbose:
-#					print(f"Found code cave at 0x{cave_start:X} with size of {cave_length} bytes")
-#
-#				self._cave_search_address = idx
-#				return (cave_start, cave_length)
-#
-#		raise RuntimeError("No code cave found!")
+	def _ensure_bytes(self, address: int, code: str | bytes | list[int]) -> bytes:
+		if isinstance(code, str):
+			return self.compiler.compile(address, code)
+		elif isinstance(code, bytes):
+			return code
+		return bytes(code)
