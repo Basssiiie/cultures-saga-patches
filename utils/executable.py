@@ -6,7 +6,6 @@ from utils.pretty_print import Color, error, log, pretty_print, warning
 
 class Executable:
 	_buffer = bytearray()
-	_cave_search_address = 0x1000
 
 	def __init__(self, path: str, force: bool, verbose: bool, code_cave: int) -> None:
 		self.force = force

@@ -15,7 +15,7 @@ These include but are not limited to:
 - Increasing the assistant limit from 20 to 100.
 - Make the pathfinder work about 11 times faster, from 2 to 22 simultaneous searches.
 - Make the assistant work about 7 times faster, from every 15 seconds to every 2 seconds.
-- Allow assistant requests to be increased by 10 with CTRL-clicking.
+- Allow assistant requests to be increased and decremented by 10 with CTRL-clicking.
 
 Additional credits and thanks goes to [Siguza](https://github.com/Siguza), [Mikulus](https://github.com/Mikulus6), [Tyrannica](https://github.com/ARKAMENTOR) for making these patches possible.
 
