@@ -11,6 +11,8 @@ from patches.houseLimits import HouseLimits
 from patches.humanLimits import HumanLimits
 from patches.mapMoveableLimits import MapMoveableLimits
 from patches.missionLimits import MissionLimits
+from patches.multiplayerLog import MultiplayerLog
+from patches.multiplayerStability import MultiplayerStability
 from patches.pathfinderLimits import PathfinderLimits
 from utils.executable import Executable
 from utils.patch import Patch
@@ -31,6 +33,9 @@ patches: list[Patch] = [
 	# Assistant limits
 	AssistantLimits(),
 	AssistantCtrlClick(),
+	# Multiplayer
+	MultiplayerStability(),
+	MultiplayerLog(),
 ]
 
 parser = argparse.ArgumentParser("Cultures Saga patcher", "Patcher to increase various limits and fix bugs in Cultures Saga.")

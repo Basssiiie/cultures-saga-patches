@@ -24,8 +24,8 @@ class Compiler:
 			if not symbol.startswith(b'symbol__'):
 				return False
 
-			address = int(symbol[8:], 16) - 4  # Adjust for instruction size?
-			value[0] = address
+			address = int(symbol[8:], 16)
+			value[0] = address - 4  # Adjust for instruction size?
 
 			if self.verbose:
 				log(f"Resolved absolute jump to 0x{address:X}")
