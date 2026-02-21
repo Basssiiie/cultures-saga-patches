@@ -8,12 +8,12 @@ class AssistantCtrlClick(Patch):
 			"""
 			AssistentIncrement:
 				ADD     ESP, 0xC
-				PUSH    EAX
 				MOV     dword ptr [EBP + -0xC], EBX      ; default increment value
 			""")
 		multiplier_address = exe.add_code_cave(
 			"""
 			AssistentMultiplier:
+				PUSH    EAX
 				MOV     EAX, [0x554F40]                  ; SystemKeyManager
 				MOV     EAX, dword ptr [EAX]             ; dereference value
 				SHR     EAX, 1
