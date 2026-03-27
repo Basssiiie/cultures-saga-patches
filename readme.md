@@ -17,6 +17,7 @@ These include but are not limited to:
 - Make the assistant work about 7 times faster, from every 15 seconds to every 2 seconds.
 - Make the multiplayer save/custom map transfer a lot more stable, and about 10-20 times faster.
 - Allow assistant requests to be increased and decreased by 10 with CTRL-clicking.
+- Allow assistant requests for soldiers to be used with tribes other than Vikings.
 - Allow DirectMusic to be played in multiplayer and stop overriding the user's music option.
 
 Additional credits and thanks goes to [Siguza](https://github.com/Siguza), [Mikulus](https://github.com/Mikulus6), [Tyrannica](https://github.com/ARKAMENTOR) for making these patches possible.

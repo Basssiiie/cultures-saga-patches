@@ -4,6 +4,7 @@ import datetime
 from patches.animalLimits import AnimalLimits
 from patches.assistantCtrlClick import AssistantCtrlClick
 from patches.assistantLimits import AssistantLimits
+from patches.assistantSoldiersAnyTribe import AssistantSoldiersAnyTribe
 from patches.fixAttackRadiusFreeze import FixAttackRadiusFreeze
 from patches.fixMarkerOnBorderCrash import FixMarkerOnBorderCrash
 from patches.fixVehicleConstructionFreeze import FixVehicleConstructionFreeze
@@ -35,6 +36,7 @@ patches: list[Patch] = [
 	# Assistant limits
 	AssistantLimits(),
 	AssistantCtrlClick(),
+	AssistantSoldiersAnyTribe(),
 	# Multiplayer
 	MultiplayerStability(),
 	MultiplayerTransferSize(),
