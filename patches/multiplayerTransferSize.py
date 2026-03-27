@@ -5,7 +5,7 @@ from utils.patch import Patch
 class MultiplayerTransferSize(Patch):
 	def apply(self, exe: Executable) -> None:
 		# Patch size of packets for transferring saves/custom maps in multiplayer matches
-		size = 0x20_000 # 128 KB
+		size = 0x5000 # 32 KB
 
 		# Increase the stack and push new size
 		exe.verify_and_replace(0xDFBD3, [ 0xb8, 0x68, 0x11, 0x00, 0x00 ], f"MOV EAX, 0x{size + 0x168:X}")
