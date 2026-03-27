@@ -12,6 +12,7 @@ from patches.humanLimits import HumanLimits
 from patches.mapMoveableLimits import MapMoveableLimits
 from patches.missionLimits import MissionLimits
 from patches.multiplayerLog import MultiplayerLog
+from patches.multiplayerMusic import MultiplayerMusic
 from patches.multiplayerStability import MultiplayerStability
 from patches.multiplayerTransferSize import MultiplayerTransferSize
 from patches.pathfinderLimits import PathfinderLimits
@@ -37,6 +38,7 @@ patches: list[Patch] = [
 	# Multiplayer
 	MultiplayerStability(),
 	MultiplayerTransferSize(),
+	MultiplayerMusic(),
 	MultiplayerLog(),
 ]
 
