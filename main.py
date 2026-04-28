@@ -7,6 +7,7 @@ from patches.assistantLimits import AssistantLimits
 from patches.assistantSoldiersAnyTribe import AssistantSoldiersAnyTribe
 from patches.fixAttackRadiusFreeze import FixAttackRadiusFreeze
 from patches.fixMarkerOnBorderCrash import FixMarkerOnBorderCrash
+from patches.fixParticleOutsideMapCrash import FixParticleOutsideMapCrash
 from patches.fixVehicleConstructionFreeze import FixVehicleConstructionFreeze
 from patches.houseLimits import HouseLimits
 from patches.humanLimits import HumanLimits
@@ -25,6 +26,7 @@ patches: list[Patch] = [
 	# Bug fixes
 	FixAttackRadiusFreeze(),
 	FixMarkerOnBorderCrash(),
+	FixParticleOutsideMapCrash(),
 	FixVehicleConstructionFreeze(),
 	# Map limits
 	AnimalLimits(),
